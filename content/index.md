@@ -10,9 +10,7 @@ This composable helps to provide you with that structure.
 
 I'm calling it a composable in general and not just in the terms of NUXT. It is a utility method for you that provides you a with very granular and precise control over your network calls.
 
-Let's discuss what's there to offer and you'll know whether you need this or not.
-
-## Features
+Let's discuss what's there to offer and you'll know whether you need this or not by looking at this quick example which is followed by a list of features and documentation.
 
 ### Network Requests
 
@@ -51,38 +49,8 @@ Notice, that the required keys have pretty self explanatory names, let's add the
 
 We can select the type of our API method, and specify the API endpoint.
 
+Now all you have to do is play around with the result that you get from the endpoint.
 
+### Features
 
-\#### Error Handling:
-
-\- \[x] Add retry mechanisms
-
-\- \[ ] Custom error handling
-
-\- \[x] Cancellation tokens
-
-\#### Timeouts and Caching:
-
-\- \[x] Support request timeouts
-
-\- \[x] Add response caching
-
-\#### Logging and Global Config:
-
-\- \[x] Introduce logging for requests
-
-\- \[x] Global config for reusable options.
-
-\#### Multiple Hosts:
-
-\- \[ ] Support for different API hosts
-
-\- \[ ] Dynamically set the base URL.
-
-\#### Type-Safe Responses:
-
-\- \[ ] Return typed responses
-
-\#### Batch Request Support:
-
-\- \[ ] Execute multiple API calls concurrently or sequentially.
+### Documentation
