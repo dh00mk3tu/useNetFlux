@@ -37,7 +37,7 @@ const defaultConfig = ref({
   logging: true, // Enable or disable logging globally
 });
 
-export function useRequestManager() {
+export function useNetStack() {
   const requestQueue = ref(new Map()); // Store ongoing requests
   const cacheStore = ref(new Map()); // Store cached responses
 

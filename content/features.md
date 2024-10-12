@@ -2,378 +2,309 @@
 
 Here's a Markdown file listing all the features and details about the `useNetStack` package:
 
-\`\`\`markdown
-
-\# useNetStack - A Powerful Composable for API Requests
+````markdown
+# useNetStack - A Powerful Composable for API Requests
 
 `useNetStack` is a versatile Vue 3/Nuxt 3 composable that abstracts and enhances API requests with built-in features like retries, caching, timeouts, request cancellation, and logging. It is designed to handle common challenges in API requests while providing a flexible and configurable structure.
 
-\## Key Features
+## Key Features
 
-\### 1. **Retries**
+### 1. **Retries**
 
 Automatically retry failed requests based on configurable settings.
 
-\- **Global Default**: 3 retries
+- **Global Default**: 3 retries
 
-\- **Customizable**: Set retries and retry delay per request
+- **Customizable**: Set retries and retry delay per request
 
-\- **Example**:
+- **Example**:
 
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "https://api.example.com/data",
+  },
 
-method: 'GET',
+  retries: 5, // Retry up to 5 times
 
-endpoint: 'https\://api.example.com/data',
-
-},
-
-retries: 5,       // Retry up to 5 times
-
-retryDelay: 2000, // 2-second delay between retries
-
+  retryDelay: 2000, // 2-second delay between retries
 });
+```
+````
 
-\`\`\`
-
-\### 2. **Timeouts**
+### 2. **Timeouts**
 
 Set time limits on API requests to avoid indefinite waiting.
 
-\- **Global Default**: 5 seconds
+- **Global Default**: 5 seconds
 
-\- **Customizable**: Timeout can be set per request
+- **Customizable**: Timeout can be set per request
 
-\- **Example**:
+- **Example**:
 
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "POST",
 
-apiRequest: {
+    endpoint: "https://api.example.com/create",
 
-method: 'POST',
-
-endpoint: 'https\://api.example.com/create',
-
-timeout: 10000,   // 10-second timeout
-
-},
-
+    timeout: 10000, // 10-second timeout
+  },
 });
+```
 
-\`\`\`
-
-\### 3. **Caching**
+### 3. **Caching**
 
 Cache responses for a specified duration to minimize redundant network calls.
 
-\- **Global Default**: Cached for 1 minute
+- **Global Default**: Cached for 1 minute
 
-\- **Customizable**: Set `cacheDuration` per request
+- **Customizable**: Set `cacheDuration` per request
 
-\- **Skip Cache**: Force bypassing cache by setting `skipCache: true`
+- **Skip Cache**: Force bypassing cache by setting `skipCache: true`
 
-\- **Example**:
+- **Example**:
 
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "https://api.example.com/data",
+  },
 
-method: 'GET',
+  cacheDuration: 120000, // Cache for 2 minutes
 
-endpoint: 'https\://api.example.com/data',
-
-},
-
-cacheDuration: 120000, // Cache for 2 minutes
-
-skipCache: false,      // Enable cache by default
-
+  skipCache: false, // Enable cache by default
 });
+```
 
-\`\`\`
-
-\### 4. **Request Cancellation**
+### 4. **Request Cancellation**
 
 Abort ongoing requests using an `AbortController`.
 
-\- **Auto-Generated**: Timeout automatically triggers request cancellation
+- **Auto-Generated**: Timeout automatically triggers request cancellation
 
-\- **Custom**: Pass your own `AbortController` to manually cancel requests
+- **Custom**: Pass your own `AbortController` to manually cancel requests
 
-\- **Example**:
+- **Example**:
 
-\`\`\`ts
-
+```ts
 const controller = new AbortController();
 
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "https://api.example.com/data",
+  },
 
-method: 'GET',
-
-endpoint: 'https\://api.example.com/data',
-
-},
-
-cancellationToken: controller,
-
+  cancellationToken: controller,
 });
 
 // Cancel the request after 2 seconds
 
 setTimeout(() => controller.abort(), 2000);
+```
 
-\`\`\`
-
-\### 5. **Global Configuration**
+### 5. **Global Configuration**
 
 Define global defaults for retries, timeouts, caching, and more.
 
-\- **Flexible**: Update default settings for all requests
+- **Flexible**: Update default settings for all requests
 
-\- **Example**:
+- **Example**:
 
-\`\`\`ts
-
+```ts
 updateGlobalConfig({
+  retries: 5, // Set global retries to 5
 
-retries: 5,       // Set global retries to 5
+  timeout: 15000, // Set global timeout to 15 seconds
 
-timeout: 15000,   // Set global timeout to 15 seconds
-
-logging: true,    // Enable logging globally
-
+  logging: true, // Enable logging globally
 });
+```
 
-\`\`\`
-
-\### 6. **Logging**
+### 6. **Logging**
 
 Get real-time logging information about request behavior.
 
-\- **Global Setting**: Enable or disable logging in the global configuration
+- **Global Setting**: Enable or disable logging in the global configuration
 
-\- **Log Levels**: `info`, `warn`, `error`
+- **Log Levels**: `info`, `warn`, `error`
 
-\- **Example** log output:
+- **Example** log output:
 
-\`\`\`log
+```log
 
-\[INFO]: Starting API call { url: 'https\://api.example.com/data', method: 'GET' }
+[INFO]: Starting API call { url: 'https://api.example.com/data', method: 'GET' }
 
-\[WARN]: Retrying... Attempt 2 { endpoint: 'https\://api.example.com/data' }
+[WARN]: Retrying... Attempt 2 { endpoint: 'https://api.example.com/data' }
 
-\[ERROR]: API call failed { endpoint: 'https\://api.example.com/data', error: 'Timeout' }
+[ERROR]: API call failed { endpoint: 'https://api.example.com/data', error: 'Timeout' }
 
-\`\`\`
+```
 
-\## Methods
+## Methods
 
-\### `executeCall`
+### `executeCall`
 
 The core method to make API requests with enhanced features like retries, caching, timeouts, and logging.
 
-\`\`\`ts
-
+```ts
 async function executeCall({
+  apiRequest,
 
-apiRequest,
+  retries = 3,
 
-retries = 3,
+  retryDelay = 1000,
 
-retryDelay = 1000,
+  timeout = 5000,
 
-timeout = 5000,
+  cacheDuration = 60000,
 
-cacheDuration = 60000,
+  skipCache = false,
 
-skipCache = false,
+  cancellationToken,
 
-cancellationToken,
+  async = false,
 
-async = false,
+  override = false,
+}: ExecuteCallParams): Promise<any>;
+```
 
-override = false,
-
-}: ExecuteCallParams): Promise\<any>
-
-\`\`\`
-
-\### `updateGlobalConfig`
+### `updateGlobalConfig`
 
 Modify global configurations for all requests.
 
-\`\`\`ts
+```ts
+function updateGlobalConfig(
+  newConfig: Partial<typeof defaultConfig.value>
+): void;
+```
 
-function updateGlobalConfig(newConfig: Partial\<typeof defaultConfig.value>): void
+### Example: Updating Global Config
 
-\`\`\`
-
-\### Example: Updating Global Config
-
-\`\`\`ts
-
+```ts
 updateGlobalConfig({
+  retries: 4, // Update retries globally to 4
 
-retries: 4,           // Update retries globally to 4
-
-cacheDuration: 300000, // Cache for 5 minutes
-
+  cacheDuration: 300000, // Cache for 5 minutes
 });
+```
 
-\`\`\`
-
-\## API Request Structure
+## API Request Structure
 
 `apiRequest` object defines the structure of the API call, which includes the HTTP method, endpoint, headers, and body.
 
-\### Structure:
+### Structure:
 
-\`\`\`ts
-
+```ts
 interface ApiRequest {
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"; // HTTP method
 
-method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';  // HTTP method
+  endpoint: string; // API endpoint
 
-endpoint: string;                                     // API endpoint
+  headers?: Record<string, string>; // Optional headers
 
-headers?: Record\<string, string>;                     // Optional headers
+  queryParams?: Record<string, string | number>; // Optional query parameters
 
-queryParams?: Record\<string, string | number>;        // Optional query parameters
-
-body?: any;                                           // Optional body for POST, PUT, etc.
-
+  body?: any; // Optional body for POST, PUT, etc.
 }
+```
 
-\`\`\`
+### Example:
 
-\### Example:
-
-\`\`\`ts
-
+```ts
 const apiRequest = {
+  method: "POST",
 
-method: 'POST',
+  endpoint: "https://api.example.com/create",
 
-endpoint: 'https\://api.example.com/create',
+  headers: {
+    Authorization: "Bearer token",
+  },
 
-headers: {
+  body: {
+    name: "New Item",
 
-Authorization: 'Bearer token',
-
-},
-
-body: {
-
-name: 'New Item',
-
-description: 'This is a new item',
-
-},
-
+    description: "This is a new item",
+  },
 };
+```
 
-\`\`\`
+## Example Usage
 
-\## Example Usage
+### Simple GET Request
 
-\### Simple GET Request
-
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
-
-method: 'GET',
-
-endpoint: 'https\://api.example.com/data',
-
-},
-
+    endpoint: "https://api.example.com/data",
+  },
 });
+```
 
-\`\`\`
+### POST Request with Retries and Timeout
 
-\### POST Request with Retries and Timeout
-
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "POST",
 
-apiRequest: {
+    endpoint: "https://api.example.com/create",
 
-method: 'POST',
+    body: { name: "New Item" },
+  },
 
-endpoint: 'https\://api.example.com/create',
+  retries: 5, // Retry up to 5 times
 
-body: { name: 'New Item' },
+  retryDelay: 2000, // 2-second delay between retries
 
-},
-
-retries: 5,       // Retry up to 5 times
-
-retryDelay: 2000, // 2-second delay between retries
-
-timeout: 10000,   // 10-second timeout
-
+  timeout: 10000, // 10-second timeout
 });
+```
 
-\`\`\`
+### Request with Custom Cancellation Token
 
-\### Request with Custom Cancellation Token
-
-\`\`\`ts
-
+```ts
 const controller = new AbortController();
 
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "https://api.example.com/data",
+  },
 
-method: 'GET',
-
-endpoint: 'https\://api.example.com/data',
-
-},
-
-cancellationToken: controller,  // Use a custom token to cancel the request
-
+  cancellationToken: controller, // Use a custom token to cancel the request
 });
 
 // Cancel the request after 2 seconds
 
 setTimeout(() => controller.abort(), 2000);
+```
 
-\`\`\`
+### Updating Global Configuration
 
-\### Updating Global Configuration
-
-\`\`\`ts
-
+```ts
 updateGlobalConfig({
+  retries: 2, // Update global retries to 2
 
-retries: 2,  // Update global retries to 2
-
-logging: true,  // Enable logging globally
-
+  logging: true, // Enable logging globally
 });
+```
 
-\`\`\`
-
-\## Conclusion
+## Conclusion
 
 The `useNetStack` composable enhances the process of making API requests by providing support for retries, timeouts, caching, cancellation, and logging. It is flexible, with both per-request and global configurations available, making it a powerful tool for handling network requests in your Vue 3/Nuxt 3 applications.
 
-\`\`\`
+```
 
 This markdown file contains a detailed description of the package and covers all features introduced in `useNetStack`.
+```

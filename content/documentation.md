@@ -2,442 +2,378 @@
 
 Here's the updated documentation with the name changed to `useNetStack`:
 
-\---
+---
 
-\# NetStack Documentation
+# NetStack Documentation
 
 This `useNetStack` composable provides an abstraction for making API requests with additional features such as retries, caching, timeouts, cancellation, and logging. It also includes a global configuration that can be customized.
 
-\## Table of Contents
+## Table of Contents
 
-\- \[Installation]\(#installation)
+- [Installation](#installation)
 
-\- \[Basic Usage]\(#basic-usage)
+- [Basic Usage](#basic-usage)
 
-\- \[API Request Structure]\(#api-request-structure)
+- [API Request Structure](#api-request-structure)
 
-\- \[Options for `executeCall`]\(#options-for-executecall)
+- [Options for `executeCall`](#options-for-executecall)
 
-\- \[Global Configuration]\(#global-configuration)
+- [Global Configuration](#global-configuration)
 
-\- \[Features]\(#features)
+- [Features](#features)
 
-\- \[Retries]\(#retries)
+- [Retries](#retries)
 
-\- \[Timeouts]\(#timeouts)
+- [Timeouts](#timeouts)
 
-\- \[Caching]\(#caching)
+- [Caching](#caching)
 
-\- \[Request Cancellation]\(#request-cancellation)
+- [Request Cancellation](#request-cancellation)
 
-\- \[Logging]\(#logging)
+- [Logging](#logging)
 
-\- \[Methods]\(#methods)
+- [Methods](#methods)
 
-\- \[\`executeCall\`]\(#executecall)
+- [`executeCall`](#executecall)
 
-\- \[\`updateGlobalConfig\`]\(#updateglobalconfig)
+- [`updateGlobalConfig`](#updateglobalconfig)
 
-\- \[Logging Behavior]\(#logging-behavior)
+- [Logging Behavior](#logging-behavior)
 
-\- \[Example Usage]\(#example-usage)
+- [Example Usage](#example-usage)
 
-\---
+---
 
-\## Installation
+## Installation
 
 To use `useNetStack`, first import the composable into your Vue 3/Nuxt 3 project.
 
-\`\`\`ts
+```ts
+import { useNetStack } from "./netStack";
+```
 
-import { useNetStack } from './netStack';
+---
 
-\`\`\`
-
-\---
-
-\## Basic Usage
+## Basic Usage
 
 The `useNetStack` composable allows you to make API calls with customizable options such as retries, timeouts, cache handling, and more.
 
-\`\`\`ts
-
+```ts
 const { executeCall, updateGlobalConfig } = useNetStack();
 
 // Example of making a GET request
 
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
-
-method: 'GET',
-
-endpoint: '<https://api.example.com/data>',
-
-},
-
+    endpoint: "<https://api.example.com/data>",
+  },
 });
+```
 
-\`\`\`
+---
 
-\---
-
-\## API Request Structure
+## API Request Structure
 
 The `apiRequest` object defines the structure of the API request.
 
-\### Structure
+### Structure
 
-\`\`\`ts
-
+```ts
 interface ApiRequest {
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH"; // HTTP method
 
-method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'; // HTTP method
+  endpoint: string; // API endpoint
 
-endpoint: string;                                     // API endpoint
+  headers?: Record<string, string>; // Optional headers
 
-headers?: Record\<string, string>;                     // Optional headers
+  queryParams?: Record<string, string | number>; // Optional query parameters
 
-queryParams?: Record\<string, string | number>;        // Optional query parameters
-
-body?: any;                                           // Optional body for POST, PUT, etc.
-
+  body?: any; // Optional body for POST, PUT, etc.
 }
+```
 
-\`\`\`
+### Example
 
-\### Example
-
-\`\`\`ts
-
+```ts
 const apiRequest = {
+  method: "POST",
 
-method: 'POST',
+  endpoint: "<https://api.example.com/create>",
 
-endpoint: '<https://api.example.com/create>',
+  headers: {
+    Authorization: "Bearer token",
+  },
 
-headers: {
+  body: {
+    name: "New Item",
 
-Authorization: 'Bearer token',
-
-},
-
-body: {
-
-name: 'New Item',
-
-description: 'This is a new item',
-
-},
-
+    description: "This is a new item",
+  },
 };
+```
 
-\`\`\`
+---
 
-\---
-
-\## Options for `executeCall`
+## Options for `executeCall`
 
 The `executeCall` function accepts the following options:
 
-\`\`\`ts
-
+```ts
 interface ExecuteCallParams {
+  apiRequest: ApiRequest; // The API request object
 
-apiRequest: ApiRequest;             // The API request object
+  async?: boolean; // Run asynchronously without waiting for the ongoing request
 
-async?: boolean;                    // Run asynchronously without waiting for the ongoing request
+  override?: boolean; // Override any ongoing request for the same endpoint
 
-override?: boolean;                 // Override any ongoing request for the same endpoint
+  retries?: number; // Number of retry attempts on failure (default: 3)
 
-retries?: number;                   // Number of retry attempts on failure (default: 3)
+  retryDelay?: number; // Delay between retries in milliseconds (default: 1000ms)
 
-retryDelay?: number;                // Delay between retries in milliseconds (default: 1000ms)
+  cancellationToken?: AbortController; // Custom cancellation token
 
-cancellationToken?: AbortController; // Custom cancellation token
+  timeout?: number; // Request timeout in milliseconds (default: 5000ms)
 
-timeout?: number;                   // Request timeout in milliseconds (default: 5000ms)
+  cacheDuration?: number; // Cache duration in milliseconds (default: 60000ms)
 
-cacheDuration?: number;             // Cache duration in milliseconds (default: 60000ms)
-
-skipCache?: boolean;                // Skip cache and force a fresh request (default: false)
-
+  skipCache?: boolean; // Skip cache and force a fresh request (default: false)
 }
+```
 
-\`\`\`
+### Example
 
-\### Example
-
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "<https://api.example.com/data>",
+  },
 
-method: 'GET',
+  retries: 5,
 
-endpoint: '<https://api.example.com/data>',
+  timeout: 10000,
 
-},
-
-retries: 5,
-
-timeout: 10000,
-
-cacheDuration: 120000,  // Cache for 2 minutes
-
+  cacheDuration: 120000, // Cache for 2 minutes
 });
+```
 
-\`\`\`
+---
 
-\---
-
-\## Global Configuration
+## Global Configuration
 
 `useNetStack` has a global configuration that can be updated using `updateGlobalConfig`. This allows setting default behaviors for all API calls.
 
-\### Global Config Fields
+### Global Config Fields
 
-\`\`\`ts
-
+```ts
 const defaultConfig = ref({
+  retries: 3, // Default number of retries (3 attempts)
 
-retries: 3,            // Default number of retries (3 attempts)
+  retryDelay: 1000, // Default retry delay (1 second)
 
-retryDelay: 1000,       // Default retry delay (1 second)
+  timeout: 5000, // Default timeout (5 seconds)
 
-timeout: 5000,          // Default timeout (5 seconds)
+  cacheDuration: 60000, // Default cache duration (1 minute)
 
-cacheDuration: 60000,   // Default cache duration (1 minute)
+  async: false, // Default async behavior (wait for ongoing request)
 
-async: false,           // Default async behavior (wait for ongoing request)
+  override: false, // Default override behavior (do not override ongoing request)
 
-override: false,        // Default override behavior (do not override ongoing request)
+  skipCache: false, // Default skip cache (false)
 
-skipCache: false,       // Default skip cache (false)
-
-logging: true,          // Enable logging globally (true)
-
+  logging: true, // Enable logging globally (true)
 });
+```
 
-\`\`\`
+### Example: Updating Global Config
 
-\### Example: Updating Global Config
-
-\`\`\`ts
-
+```ts
 updateGlobalConfig({
+  retries: 2,
 
-retries: 2,
+  timeout: 10000, // 10 seconds timeout
 
-timeout: 10000,  // 10 seconds timeout
-
-logging: true,   // Enable logging
-
+  logging: true, // Enable logging
 });
+```
 
-\`\`\`
+---
 
-\---
+## Features
 
-\## Features
-
-\### Retries
+### Retries
 
 `useNetStack` supports automatic retries when a network request fails. The number of retries and delay between retries can be configured.
 
-\- **Global default**: 3 retries with a 1-second delay.
+- **Global default**: 3 retries with a 1-second delay.
 
-\- **Custom per request**: You can override the global retries for individual requests.
+- **Custom per request**: You can override the global retries for individual requests.
 
-\### Timeouts
+### Timeouts
 
 You can set a timeout for requests. If the request takes longer than the specified time, it will be aborted.
 
-\- **Global default**: 5 seconds.
+- **Global default**: 5 seconds.
 
-\- **Custom per request**: You can override the global timeout for individual requests.
+- **Custom per request**: You can override the global timeout for individual requests.
 
-\### Caching
+### Caching
 
 Responses can be cached to prevent redundant network requests within a specific time frame.
 
-\- **Global default**: Cached for 1 minute.
+- **Global default**: Cached for 1 minute.
 
-\- **Custom per request**: Set `cacheDuration` or skip cache by setting `skipCache: true`.
+- **Custom per request**: Set `cacheDuration` or skip cache by setting `skipCache: true`.
 
-\### Request Cancellation
+### Request Cancellation
 
 Abort controllers can be used to cancel ongoing requests. You can pass a custom `AbortController` or let `useNetStack` handle cancellation with timeouts.
 
-\### Logging
+### Logging
 
 Logging helps in monitoring the network stack’s behavior, such as request retries, errors, caching, and other events.
 
-\- **Global Config**: Enable or disable logging globally.
+- **Global Config**: Enable or disable logging globally.
 
-\- **Log Levels**: `info`, `warn`, `error`.
+- **Log Levels**: `info`, `warn`, `error`.
 
-\---
+---
 
-\## Methods
+## Methods
 
-\### `executeCall`
+### `executeCall`
 
 Performs the API call with retries, caching, timeouts, and other options.
 
-\`\`\`ts
-
+```ts
 async function executeCall({
+  apiRequest,
 
-apiRequest,
+  async,
 
-async,
+  override,
 
-override,
+  retries,
 
-retries,
+  retryDelay,
 
-retryDelay,
+  cancellationToken,
 
-cancellationToken,
+  timeout,
 
-timeout,
+  cacheDuration,
 
-cacheDuration,
+  skipCache,
+}: ExecuteCallParams): Promise<any>;
+```
 
-skipCache,
-
-}: ExecuteCallParams): Promise\<any>
-
-\`\`\`
-
-\### `updateGlobalConfig`
+### `updateGlobalConfig`
 
 Updates the global configuration of the network stack.
 
-\`\`\`ts
+```ts
+function updateGlobalConfig(
+  newConfig: Partial<typeof defaultConfig.value>
+): void;
+```
 
-function updateGlobalConfig(newConfig: Partial\<typeof defaultConfig.value>): void
+---
 
-\`\`\`
-
-\---
-
-\## Logging Behavior
+## Logging Behavior
 
 Logging helps trace the flow of requests and catch potential issues during retries, caching, or timeouts. The logging system provides three levels:
 
-\- **info**: General information about requests, retries, and caching.
+- **info**: General information about requests, retries, and caching.
 
-\- **warn**: Warnings such as retries or request aborts.
+- **warn**: Warnings such as retries or request aborts.
 
-\- **error**: Errors encountered during network requests.
+- **error**: Errors encountered during network requests.
 
-\### Example Log Output
+### Example Log Output
 
-\`\`\`log
+```log
 
-\[2024-10-12T10:00:00.000Z] INFO: Starting API call { url: '<https://api.example.com/data>', method: 'GET' }
+[2024-10-12T10:00:00.000Z] INFO: Starting API call { url: '<https://api.example.com/data>', method: 'GET' }
 
-\[2024-10-12T10:00:01.000Z] WARN: Retrying... Attempt 2 { endpoint: '<https://api.example.com/data>' }
+[2024-10-12T10:00:01.000Z] WARN: Retrying... Attempt 2 { endpoint: '<https://api.example.com/data>' }
 
-\[2024-10-12T10:00:03.000Z] INFO: Response cached for: <https://api.example.com/data> { cacheDuration: 60000 }
+[2024-10-12T10:00:03.000Z] INFO: Response cached for: <https://api.example.com/data> { cacheDuration: 60000 }
 
-\[2024-10-12T10:00:05.000Z] ERROR: API call failed for: <https://api.example.com/data> { error: 'Network error' }
+[2024-10-12T10:00:05.000Z] ERROR: API call failed for: <https://api.example.com/data> { error: 'Network error' }
 
-\`\`\`
+```
 
-\---
+---
 
-\## Example Usage
+## Example Usage
 
-\### Simple GET Request
+### Simple GET Request
 
-\`\`\`ts
-
+```ts
 const { executeCall } = useNetStack();
 
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
-
-method: 'GET',
-
-endpoint: '<https://api.example.com/data>',
-
-},
-
+    endpoint: "<https://api.example.com/data>",
+  },
 });
+```
 
-\`\`\`
+### POST Request with Retries and Timeout
 
-\### POST Request with Retries and Timeout
-
-\`\`\`ts
-
+```ts
 executeCall({
+  apiRequest: {
+    method: "POST",
 
-apiRequest: {
+    endpoint: "<https://api.example.com/create>",
 
-method: 'POST',
+    body: { name: "New Item" },
+  },
 
-endpoint: '<https://api.example.com/create>',
+  retries: 5, // Retry up to 5 times
 
-body: { name: 'New Item' },
+  retryDelay: 2000, // 2-second delay between retries
 
-},
-
-retries: 5,       // Retry up to 5 times
-
-retryDelay: 2000, // 2-second delay between retries
-
-timeout: 10000,   // 10-second timeout
-
+  timeout: 10000, // 10-second timeout
 });
+```
 
-\`\`\`
+### Request with Custom Cancellation Token
 
-\### Request with Custom Cancellation Token
-
-\`\`\`ts
-
+```ts
 const controller = new AbortController();
 
 executeCall({
+  apiRequest: {
+    method: "GET",
 
-apiRequest: {
+    endpoint: "<https://api.example.com/data>",
+  },
 
-method: 'GET',
-
-endpoint: '<https://api.example.com/data>',
-
-},
-
-cancellationToken: controller,  // Use a custom token to cancel the request
-
+  cancellationToken: controller, // Use a custom token to cancel the request
 });
 
 // Cancel the request after 2 seconds
 
 setTimeout(() => controller.abort(), 2000);
+```
 
-\`\`\`
+### Updating Global Configuration
 
-\### Updating Global Configuration
-
-\`\`\`ts
-
+```ts
 const { updateGlobalConfig } = useNetStack();
 
 updateGlobalConfig({
+  retries: 2, // Update global retries to 2
 
-retries: 2,  // Update global retries to 2
-
-logging: true,  // Enable logging globally
-
+  logging: true, // Enable logging globally
 });
+```
 
-\`\`\`
-
-\---
+---
