@@ -12,13 +12,17 @@ I'm calling it a composable in general and not just in the terms of NUXT. It is 
 
 Let's discuss what's there to offer and you'll know whether you need this or not by looking at this quick example which is followed by a list of features and documentation.
 
-### Network Requests
+### [Features](/features)
+
+### [Documentation](/documentation)
+
+---
+
+### Quick Example
 
 `useNetStack` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls, provide you with logs when you need them and solid control of each individual call as well. Let's start by making a normal API call.
 
 After importing `useNetStack()`, you'll find that it exports a method called `executeCall` . This method allows us to make our API calls and provides us with all the options that are required for granular control over our call.
-
-#### Quick Example
 
 ![Importing Method](/Importing%20Method)
 
@@ -51,6 +55,4 @@ We can select the type of our API method, and specify the API endpoint.
 
 Now all you have to do is play around with the result that you get from the endpoint.
 
-### Features
-
-### Documentation
+Head over to [Features](/features) to read more about the `useNetStack` or head to [Documentation](/documentation) if you're ready to get started.

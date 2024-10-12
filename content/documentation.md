@@ -72,7 +72,7 @@ apiRequest: {
 
 method: 'GET',
 
-endpoint: 'https\://api.example.com/data',
+endpoint: '<https://api.example.com/data>',
 
 },
 
@@ -114,7 +114,7 @@ const apiRequest = {
 
 method: 'POST',
 
-endpoint: 'https\://api.example.com/create',
+endpoint: '<https://api.example.com/create>',
 
 headers: {
 
@@ -176,7 +176,7 @@ apiRequest: {
 
 method: 'GET',
 
-endpoint: 'https\://api.example.com/data',
+endpoint: '<https://api.example.com/data>',
 
 },
 
@@ -338,13 +338,13 @@ Logging helps trace the flow of requests and catch potential issues during retri
 
 \`\`\`log
 
-\[2024-10-12T10:00:00.000Z] INFO: Starting API call { url: 'https\://api.example.com/data', method: 'GET' }
+\[2024-10-12T10:00:00.000Z] INFO: Starting API call { url: '<https://api.example.com/data>', method: 'GET' }
 
-\[2024-10-12T10:00:01.000Z] WARN: Retrying... Attempt 2 { endpoint: 'https\://api.example.com/data' }
+\[2024-10-12T10:00:01.000Z] WARN: Retrying... Attempt 2 { endpoint: '<https://api.example.com/data>' }
 
-\[2024-10-12T10:00:03.000Z] INFO: Response cached for: https\://api.example.com/data { cacheDuration: 60000 }
+\[2024-10-12T10:00:03.000Z] INFO: Response cached for: <https://api.example.com/data> { cacheDuration: 60000 }
 
-\[2024-10-12T10:00:05.000Z] ERROR: API call failed for: https\://api.example.com/data { error: 'Network error' }
+\[2024-10-12T10:00:05.000Z] ERROR: API call failed for: <https://api.example.com/data> { error: 'Network error' }
 
 \`\`\`
 
@@ -364,7 +364,7 @@ apiRequest: {
 
 method: 'GET',
 
-endpoint: 'https\://api.example.com/data',
+endpoint: '<https://api.example.com/data>',
 
 },
 
@@ -382,7 +382,7 @@ apiRequest: {
 
 method: 'POST',
 
-endpoint: 'https\://api.example.com/create',
+endpoint: '<https://api.example.com/create>',
 
 body: { name: 'New Item' },
 
@@ -410,7 +410,7 @@ apiRequest: {
 
 method: 'GET',
 
-endpoint: 'https\://api.example.com/data',
+endpoint: '<https://api.example.com/data>',
 
 },
 
