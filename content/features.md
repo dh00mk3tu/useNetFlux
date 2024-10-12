@@ -1,8 +1,5 @@
 # Features
 
-Here's a Markdown file listing all the features and details about the `useNetStack` package:
-
-````markdown
 # useNetStack - A Powerful Composable for API Requests
 
 `useNetStack` is a versatile Vue 3/Nuxt 3 composable that abstracts and enhances API requests with built-in features like retries, caching, timeouts, request cancellation, and logging. It is designed to handle common challenges in API requests while providing a flexible and configurable structure.
@@ -32,16 +29,13 @@ executeCall({
   retryDelay: 2000, // 2-second delay between retries
 });
 ```
-````
 
 ### 2. **Timeouts**
 
 Set time limits on API requests to avoid indefinite waiting.
 
 - **Global Default**: 5 seconds
-
 - **Customizable**: Timeout can be set per request
-
 - **Example**:
 
 ```ts
@@ -61,11 +55,8 @@ executeCall({
 Cache responses for a specified duration to minimize redundant network calls.
 
 - **Global Default**: Cached for 1 minute
-
 - **Customizable**: Set `cacheDuration` per request
-
 - **Skip Cache**: Force bypassing cache by setting `skipCache: true`
-
 - **Example**:
 
 ```ts
@@ -87,9 +78,7 @@ executeCall({
 Abort ongoing requests using an `AbortController`.
 
 - **Auto-Generated**: Timeout automatically triggers request cancellation
-
 - **Custom**: Pass your own `AbortController` to manually cancel requests
-
 - **Example**:
 
 ```ts
@@ -115,7 +104,6 @@ setTimeout(() => controller.abort(), 2000);
 Define global defaults for retries, timeouts, caching, and more.
 
 - **Flexible**: Update default settings for all requests
-
 - **Example**:
 
 ```ts
@@ -133,9 +121,7 @@ updateGlobalConfig({
 Get real-time logging information about request behavior.
 
 - **Global Setting**: Enable or disable logging in the global configuration
-
 - **Log Levels**: `info`, `warn`, `error`
-
 - **Example** log output:
 
 ```log
@@ -145,7 +131,6 @@ Get real-time logging information about request behavior.
 [WARN]: Retrying... Attempt 2 { endpoint: 'https://api.example.com/data' }
 
 [ERROR]: API call failed { endpoint: 'https://api.example.com/data', error: 'Timeout' }
-
 ```
 
 ## Methods
@@ -304,7 +289,8 @@ updateGlobalConfig({
 
 The `useNetStack` composable enhances the process of making API requests by providing support for retries, timeouts, caching, cancellation, and logging. It is flexible, with both per-request and global configurations available, making it a powerful tool for handling network requests in your Vue 3/Nuxt 3 applications.
 
-```
+```text
 
 This markdown file contains a detailed description of the package and covers all features introduced in `useNetStack`.
+
 ```
