@@ -16,6 +16,9 @@ Let's discuss what's there to offer and you'll know whether
 you need this or not.  
 
 
+### [Blog Post](https://dh00mk3tu.github.io/blogs/posts/use-net-stack/)
+### [Documentation](https://use-netstack.nuxt.space/documentation)
+
 ### Features 
 #### Network Requests 
 `useNetStack` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls  
