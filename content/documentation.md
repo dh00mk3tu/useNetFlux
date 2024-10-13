@@ -1,10 +1,4 @@
-# Documentation
-
-Here's the updated documentation with the name changed to `useNetStack`:
-
----
-
-# NetStack Documentation
+# useNetStack Documentation
 
 This `useNetStack` composable provides an abstraction for making API requests with additional features such as retries, caching, timeouts, cancellation, and logging. It also includes a global configuration that can be customized.
 
@@ -15,30 +9,30 @@ This `useNetStack` composable provides an abstraction for making API requests wi
 - [Basic Usage](#basic-usage)
 
 - [API Request Structure](#api-request-structure)
+  
+  - [Methods](#methods)
 
-- [Options for `executeCall`](#options-for-executecall)
+- [`executeCall`](#executecall)
+  
+  - [Options for `executeCall`](#options-for-executecall)
 
 - [Global Configuration](#global-configuration)
 
-- [Features](#features)
+  - [`updateGlobalConfig`](#updateglobalconfig)
 
-- [Retries](#retries)
+- [Options](#features)
 
-- [Timeouts](#timeouts)
+  - [Retries](#retries)
 
-- [Caching](#caching)
+  - [Timeouts](#timeouts)
 
-- [Request Cancellation](#request-cancellation)
+  - [Caching](#caching)
 
-- [Logging](#logging)
+  - [Request Cancellation](#request-cancellation)
 
-- [Methods](#methods)
+  - [Logging](#logging)
 
-- [`executeCall`](#executecall)
-
-- [`updateGlobalConfig`](#updateglobalconfig)
-
-- [Logging Behavior](#logging-behavior)
+    - [Logging Behavior](#logging-behavior)
 
 - [Example Usage](#example-usage)
 
@@ -47,6 +41,10 @@ This `useNetStack` composable provides an abstraction for making API requests wi
 ## Installation
 
 To use `useNetStack`, first import the composable into your Vue 3/Nuxt 3 project.
+
+I will add support for other JS/TS applications later in the future as a `npm` package.
+
+At the moment, it is tested and works the best with NUXT 3 applications.
 
 ```ts
 import { useNetStack } from "./netStack";
