@@ -1,9 +1,7 @@
-/**
- * TODO: Add detailed js/ts docs
- */
+import { ref } from "vue";
 
 // Define a type for the HTTP methods
-type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 // Define a type for the API request details
 interface ApiRequest {
@@ -28,7 +26,7 @@ interface ExecuteCallParams {
 }
 
 // Global configuration for the request manager
-const defaultConfig = {
+const defaultConfig = ref({
   retries: 3, // Default number of retry attempts
   retryDelay: 1000, // Default delay between retries in milliseconds
   timeout: 5000, // Default timeout in milliseconds (5 seconds)
@@ -37,12 +35,11 @@ const defaultConfig = {
   override: false, // Default override behavior
   skipCache: false, // Default cache skipping
   logging: true, // Enable or disable logging globally
-};
+});
 
-// Main request manager function
 export function useNetStack() {
-  const requestQueue = new Map(); // Store ongoing requests
-  const cacheStore = new Map(); // Store cached responses
+  const requestQueue = ref(new Map()); // Store ongoing requests
+  const cacheStore = ref(new Map()); // Store cached responses
 
   // Helper function for logging
   function log(
@@ -50,19 +47,13 @@ export function useNetStack() {
     message: string,
     ...details: any[]
   ) {
-    if (defaultConfig.logging) {
+    if (defaultConfig.value.logging) {
       const timestamp = new Date().toISOString();
       console[level](
         `[${timestamp}] ${level.toUpperCase()}: ${message}`,
         ...details
       );
     }
-  }
-
-  // Function to update the global configuration
-  function updateGlobalConfig(newConfig: Partial<typeof defaultConfig>) {
-    Object.assign(defaultConfig, newConfig);
-    log("info", `Global config updated`, { newConfig });
   }
 
   // Helper function to handle request timeout
@@ -118,8 +109,11 @@ export function useNetStack() {
 
     // If cache is not skipped and cache duration is valid, check for cached response
     if (!skipCache && cacheDuration && cacheDuration > 0) {
-      const cachedResponse = cacheStore.get(cacheKey);
-      if (cachedResponse && isCacheValid(cachedResponse.timestamp, cacheDuration)) {
+      const cachedResponse = cacheStore.value.get(cacheKey);
+      if (
+        cachedResponse &&
+        isCacheValid(cachedResponse.timestamp, cacheDuration)
+      ) {
         log("info", `Returning cached response for: ${cacheKey}`);
         return cachedResponse.data;
       }
@@ -174,7 +168,7 @@ export function useNetStack() {
 
         // Cache the response if cache duration is specified
         if (cacheDuration && cacheDuration > 0) {
-          cacheStore.set(cacheKey, {
+          cacheStore.value.set(cacheKey, {
             data: result,
             timestamp: Date.now(), // Save the current timestamp
           });
@@ -187,6 +181,7 @@ export function useNetStack() {
           log("warn", "Request aborted:", { endpoint });
         } else {
           log("error", "Request failed:", { error, endpoint });
+          return error;
         }
 
         // If retries are allowed and there are still retries left, retry the request
@@ -246,13 +241,19 @@ export function useNetStack() {
 
     // Merge user-provided options with global config
     const mergedOptions = {
-      async: async !== undefined ? async : defaultConfig.async,
-      override: override !== undefined ? override : defaultConfig.override,
-      retries: retries !== undefined ? retries : defaultConfig.retries,
-      retryDelay: retryDelay !== undefined ? retryDelay : defaultConfig.retryDelay,
-      timeout: timeout !== undefined ? timeout : defaultConfig.timeout,
-      cacheDuration: cacheDuration !== undefined ? cacheDuration : defaultConfig.cacheDuration,
-      skipCache: skipCache !== undefined ? skipCache : defaultConfig.skipCache,
+      async: async !== undefined ? async : defaultConfig.value.async,
+      override:
+        override !== undefined ? override : defaultConfig.value.override,
+      retries: retries !== undefined ? retries : defaultConfig.value.retries,
+      retryDelay:
+        retryDelay !== undefined ? retryDelay : defaultConfig.value.retryDelay,
+      timeout: timeout !== undefined ? timeout : defaultConfig.value.timeout,
+      cacheDuration:
+        cacheDuration !== undefined
+          ? cacheDuration
+          : defaultConfig.value.cacheDuration,
+      skipCache:
+        skipCache !== undefined ? skipCache : defaultConfig.value.skipCache,
     };
 
     const queryString = new URLSearchParams(queryParams as any).toString();
@@ -261,41 +262,58 @@ export function useNetStack() {
     log("info", `Starting API call`, { url, method, mergedOptions });
 
     // Check if an API call is already ongoing for this endpoint
-    if (requestQueue.has(url)) {
+    if (requestQueue.value.has(url)) {
       if (mergedOptions.override) {
         // Abort previous call and remove it from the queue
-        const ongoingRequest = requestQueue.get(url);
+        const ongoingRequest = requestQueue.value.get(url);
         ongoingRequest.controller.abort();
-        requestQueue.delete(url);
+        requestQueue.value.delete(url);
         log("info", `Aborted ongoing request for: ${url}`);
       } else if (!mergedOptions.async) {
         // If not async and no override, wait for the current one to finish
         log("info", `Waiting for ongoing request to complete for: ${url}`);
-        await requestQueue.get(url).promise;
+        await requestQueue.value.get(url).promise;
       }
     }
 
     // Perform the network call with retries, cancellation token, timeout, and cache support
-    const controller = new AbortController();
-    const signal = controller.signal;
-
     const callPromise = attemptNetworkCall(
-      { apiRequest, ...mergedOptions, cancellationToken: controller, timeout: mergedOptions.timeout },
+      {
+        apiRequest,
+        retries: mergedOptions.retries,
+        retryDelay: mergedOptions.retryDelay,
+        cancellationToken,
+        timeout: mergedOptions.timeout,
+        cacheDuration: mergedOptions.cacheDuration,
+        skipCache: mergedOptions.skipCache,
+      },
       0
-    ).finally(() => {
-      // Remove the request from the queue after completion
-      requestQueue.delete(url);
+    );
+
+    // Add the request to the queue
+    requestQueue.value.set(url, {
+      controller: cancellationToken || new AbortController(),
+      promise: callPromise,
     });
 
-    // Add the call to the request queue
-    requestQueue.set(url, { promise: callPromise, controller });
-
-    return callPromise;
+    try {
+      const result = await callPromise;
+      log("info", `API call completed for: ${url}`, { result });
+      return result;
+    } catch (error) {
+      log("error", `API call failed for: ${url}`, { error });
+      throw error;
+    } finally {
+      // Remove the request from the queue after it completes
+      requestQueue.value.delete(url);
+    }
   }
 
-  return {
-    executeCall,
-    updateGlobalConfig,
-    log,
-  };
+  // Function to update the global configuration
+  function updateGlobalConfig(newConfig: Partial<typeof defaultConfig.value>) {
+    defaultConfig.value = { ...defaultConfig.value, ...newConfig };
+    log("info", `Global config updated`, { newConfig });
+  }
+
+  return { executeCall, updateGlobalConfig };
 }
