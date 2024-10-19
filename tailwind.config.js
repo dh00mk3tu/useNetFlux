@@ -1,15 +1,15 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './content/**/*.{md,yml,json,json5,csv}', // Enable Tailwind to scan your content
-    './components/**/*.{vue,js}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './app.vue',
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./app.vue",
+    "./error.vue",
   ],
   theme: {
-    extend: {
-      // Custom theme styles go here
-    },
+    extend: {},
   },
   plugins: [],
 }

@@ -1,7 +1,8 @@
 <template>
     <div class="header-container">
-        <h1 class="mx-auto">useNetStack - Playground</h1>
+        <p class="mx-auto text-3xl text-center py-4">useNetStack - Playground</p>
     </div>
+    <Step0 />
     <div class="method-container">
         <h4>Step 1: Select Method Type</h4>
         <div class="method-menu">
@@ -12,9 +13,9 @@
                 </li>
             </ul>
         </div>
-        <pre>
-        Testing <code>{{ httpMethods[currentActiveMethod] }}</code> method
-        </pre>
+
+        Testing <code class="box">{{ httpMethods[currentActiveMethod] }}</code> method
+
     </div>
     <div class="method-container">
         <h4>Step 2: Custom Endpoint</h4>
@@ -40,7 +41,7 @@
 
 <script setup lang="ts">
 
-import { useNetStack, type HttpMethod } from '~/composable/useNetStackNuxt';
+import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
 const { executeCall, updateGlobalConfig } = useNetStack();
 
 
@@ -63,16 +64,25 @@ const handlePlayClick = async () => {
             endpoint: endpointInputModel.value,
             method: httpMethods[currentActiveMethod.value] as HttpMethod
         },
-        skipCache: true
+        skipCache: false
     });
 }
+
+updateGlobalConfig({
+
+});
 
 
 
 
 </script>
 
-<style scoped>
+<style>
+.box {
+    border: 1px solid black;
+    padding: 0.5em;
+}
+
 .method-container {
     border: 2px solid black;
     padding: 0.5em;
@@ -132,5 +142,10 @@ button {
     color: aliceblue;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(79, 139, 119);
+    scale: 1.04;
 }
 </style>

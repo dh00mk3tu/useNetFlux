@@ -4,4 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/content", "@nuxt/image"],
   css: ["@/assets/css/tailwind.css", "@/assets/css/theme.css"],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
 });

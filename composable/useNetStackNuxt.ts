@@ -26,7 +26,7 @@ interface ExecuteCallParams {
 }
 
 // Global configuration for the request manager
-const defaultConfig = ref({
+export const defaultConfig = ref({
   retries: 3, // Default number of retry attempts
   retryDelay: 1000, // Default delay between retries in milliseconds
   timeout: 5000, // Default timeout in milliseconds (5 seconds)
