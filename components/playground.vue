@@ -1,45 +1,56 @@
 <template>
+    <div class="header-container">
+        <p class="mx-auto text-3xl text-center py-4">useNetStack - Playground</p>
+    </div>
+    <Step0 />
     <div class="method-container">
-        <div class="menu flex flex-row justify-between items-center">
-            <div class="main-menu">
-                <div class="flex flex-row">
-                    <div v-for="(menuItem, index) in playgroundStore.playgroundMainMenu">
-                        <div :class="`box m-1 button ${menuItem.isVisible ? 'text-teal-400 bg-slate-700' : ''}`"
-                            @click="playgroundStore.toggleOptionView(index)">
-                            <span>
-                                {{ menuItem.title }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <p class="my-4">
-                    Testing <code class="box">{{ playgroundStore.currentHttpsMethod }}</code> method
-                </p>
-            </div>
+        <p class="text-2xl bold my-2">Step 1: Select Method Type</p>
+        <div class="method-menu">
+            <ul v-if="httpMethods.length > 0">
+                <li v-for="(method, index) in httpMethods" :key="index"
+                    :class="{ 'active-method': index === currentActiveMethod }" @click="handleMethodTabClick(index)">
+                    {{ method }}
+                </li>
+            </ul>
         </div>
-    </div>
-    <div v-for="menuItem in playgroundStore.playgroundMainMenu">
-        <component :is="menuItem.component" v-if="menuItem.isVisible"></component>
-    </div>
+        <p class="my-4">
+            Testing <code class="box">{{ httpMethods[currentActiveMethod] }}</code> method
+        </p>
 
+    </div>
+    <div class="method-container">
+        <p class="text-2xl bold my-2">Step 2: Custom Endpoint</p>
+        <p>Enter a custom endpoint with "https://" included.</p>
+        <p>Current default endpoint is 'https://dummyjson.com/products'</p>
+        <div class="method-menu">
+            <input type="text" v-model="endpointInputModel">
+            <button @click="handlePlayClick">
+                Test
+            </button>
+            </input>
+        </div>
+
+    </div>
+    <div class="method-container">
+        <p class="text-2xl bold my-2">Step 3: Response</p>
+        <pre>
+            {{ response }}
+        </pre>
+    </div>
 </template>
 
 <script setup lang="ts">
 
 import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
-import { usePlaygroundStore } from '~/stores/playground.store';
 const { executeCall, updateGlobalConfig } = useNetStack();
-const playgroundStore = usePlaygroundStore();
 
 
-const httpMethods = playgroundStore.httpMethods;
+const httpMethods = ['Get', 'Post', 'Delete', 'Put', 'Patch'];
 const currentActiveMethod = ref(0);
 const response = ref();
 
 
-const endpointInputModel = playgroundStore.endpoint;
+const endpointInputModel = ref('https://dummyjson.com/products/1');
 
 const handleMethodTabClick = (methodIndex: number) => {
     if (methodIndex !== currentActiveMethod.value) {
@@ -50,12 +61,13 @@ const handleMethodTabClick = (methodIndex: number) => {
 const handlePlayClick = async () => {
     response.value = await executeCall({
         apiRequest: {
-            endpoint: endpointInputModel,
+            endpoint: endpointInputModel.value,
             method: httpMethods[currentActiveMethod.value] as HttpMethod
         },
         skipCache: false
     });
 }
+
 
 
 

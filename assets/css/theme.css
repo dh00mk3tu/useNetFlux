@@ -1,71 +1,13 @@
-/* Base styles */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-body {
-  font-family: "Montserrat", sans-serif;
-  background-color: #dde0e0;
-  padding-right: 1em;
-  padding-left: 1em;
-  border: 2px solid saddlebrown;
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Questrial&display=swap");
+
+.header-text-regular {
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-/* Content-specific styles */
-.content h1 {
-  color: #1a202c;
-  font-weight: bold;
-  font-size: 2.25rem;
-}
-
-.content p {
-  color: #4a5568;
-  line-height: 1.75;
-}
-
-.content a {
-  color: #272f37;
-  text-decoration: none;
-}
-
-
-/* Add custom styles for code blocks, tables, etc. */
-pre {
-  background-color: #2d3748;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  color: #f7fafc;
-  text-wrap: wrap;
-  max-width: 100%;
-
-  white-space: pre-wrap;       /* CSS3 */
-  white-space: -moz-pre-wrap;  /* Mozilla */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* IE 5.5+ */
-  word-break: break-all;       /* Break long words if needed */
-  overflow-wrap: break-word;   /* Modern browsers */
-}
-
-code {
-  word-wrap: break-word;       /* Wrap long words in <code> */
-  white-space: pre-wrap;       /* Allow wrapping within <code> */
-}
-
-
-img {
-  max-width: 100%;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 1.5rem;
-}
-
-table th,
-table td {
-  border: 1px solid #e2e8f0;
-  padding: 0.75rem;
-}
-
-table th {
-  background-color: #edf2f7;
+.header-text-bold {
+    font-family: "Questrial", sans-serif;
+    font-weight: 800;
+    font-style: normal;
 }
