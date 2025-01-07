@@ -4,19 +4,18 @@
         <p>Enter a custom endpoint with "https://" included.</p>
         <p>Current default endpoint is 'https://dummyjson.com/products'</p>
         <div class="method-menu">
-            <input type="text" v-model="playgroundStore.endpoint">
-            <button @click="playgroundStore.handleTestButton()" class="m-2">
-                Test
-            </button>
+            <input type="text" v-model="playgroundStoreOpt.endpoint">
+                <button @click="playgroundStoreOpt.handleTestButton()" class="m-2">
+                    Test Opt Store
+                </button>
             </input>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-const playgroundStore = usePlaygroundStore();
+// const playgroundStore = usePlaygroundStore();
+const playgroundStoreOpt = usePlaygroundStoreOpt();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

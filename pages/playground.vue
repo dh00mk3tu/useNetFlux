@@ -3,9 +3,9 @@
         <div class="menu flex flex-row justify-between items-center">
             <div class="main-menu">
                 <div class="flex flex-row">
-                    <div v-for="(menuItem, index) in playgroundStore.playgroundMainMenu">
+                    <div v-for="(menuItem, index) in playgroundStoreOpt.playgroundMainMenu">
                         <div :class="`box m-1 button ${menuItem.isVisible ? 'text-teal-400 bg-slate-700' : ''}`"
-                            @click="playgroundStore.toggleOptionView(index)">
+                            @click="playgroundStoreOpt.toggleOptionView(index)">
                             <span>
                                 {{ menuItem.title }}
                             </span>
@@ -15,12 +15,12 @@
             </div>
             <div>
                 <p class="my-4">
-                    Testing <code class="box">{{ playgroundStore.currentHttpsMethod }}</code> method
+                    Testing <code class="box">{{ playgroundStoreOpt.currentHttpsMethod }}</code> method
                 </p>
             </div>
         </div>
     </div>
-    <div v-for="menuItem in playgroundStore.playgroundMainMenu">
+    <div v-for="menuItem in playgroundStoreOpt.playgroundMainMenu">
         <component :is="menuItem.component" v-if="menuItem.isVisible"></component>
     </div>
 
@@ -31,15 +31,15 @@
 import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
 import { usePlaygroundStore } from '~/stores/playground.store';
 const { executeCall, updateGlobalConfig } = useNetStack();
-const playgroundStore = usePlaygroundStore();
+const playgroundStoreOpt = usePlaygroundStoreOpt();
 
 
-const httpMethods = playgroundStore.httpMethods;
+const httpMethods = playgroundStoreOpt.httpMethods;
 const currentActiveMethod = ref(0);
 const response = ref();
 
 
-const endpointInputModel = playgroundStore.endpoint;
+const endpointInputModel = playgroundStoreOpt.endpoint;
 
 const handleMethodTabClick = (methodIndex: number) => {
     if (methodIndex !== currentActiveMethod.value) {

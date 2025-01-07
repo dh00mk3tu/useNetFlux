@@ -48,7 +48,7 @@ const { executeCall, updateGlobalConfig } = useNetStack();
 const httpMethods = ['Get', 'Post', 'Delete', 'Put', 'Patch'];
 const currentActiveMethod = ref(0);
 const response = ref();
-
+    
 
 const endpointInputModel = ref('https://dummyjson.com/products/1');
 

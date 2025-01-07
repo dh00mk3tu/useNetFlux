@@ -66,6 +66,12 @@ export const usePlaygroundStore = defineStore("counter", {
         },
         skipCache: false,
       });
+
+      if (this.response) {
+        if (!this.playgroundMainMenu[3].isVisible) {
+          this.playgroundMainMenu[3].isVisible = true;
+        }
+      }
     },
   },
 });

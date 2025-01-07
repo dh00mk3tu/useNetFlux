@@ -69,8 +69,7 @@
                             Hence, <u>useNetStack</u> was born.
 
                             <br><br>
-                            Read more about the <a href="/features">Features</a> or you can checkout the <a
-                                href="/documentation">Documentation</a> instead.
+                            A detailed documentation and & list of features will be published soon, I am working on it.
                         </p>
                     </div>
                 </div>
