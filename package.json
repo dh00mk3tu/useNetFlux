@@ -1,6 +1,6 @@
 {
   "name": "use-netflux-playground",
-  "version": "1.1.0-alpha",
+  "version": "1.2.0-alpha",
   "private": false,
   "description": "A composable for making API requests with retries, caching, timeouts, cancellation, and logging.",
   "scripts": {
