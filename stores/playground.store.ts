@@ -3,9 +3,9 @@ import type { Component } from "vue";
 import APIMethod from "~/components/APIMethod.vue";
 import GlobalConfig from "~/components/GlobalConfig.vue";
 import Response from "~/components/Response.vue";
-import { useNetStack, type HttpMethod } from "~/composable/useNetStackNuxt";
+import { useNetFlux, type HttpMethod } from "~/composable/useNetFlux";
 import APIEndpointSetup from "~/components/APIEndpointSetup.vue";
-const { executeCall, updateGlobalConfig } = useNetStack();
+const { executeCall, updateGlobalConfig } = useNetFlux();
 
 type PlayGroundMenuOption = {
   title: string;

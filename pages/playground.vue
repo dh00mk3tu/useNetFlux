@@ -17,26 +17,31 @@
                 <p class="my-4">
                     Testing <code class="box">{{ playgroundStoreOpt.currentHttpsMethod }}</code> method
                 </p>
-            </div>
+            </div>  
         </div>
     </div>
     <div v-for="menuItem in playgroundStoreOpt.playgroundMainMenu">
-        <component :is="menuItem.component" v-if="menuItem.isVisible"></component>
+        <!-- I honestly have no idea why components are not being rendered in option store and if I push the code, 
+         the pipeline will build it and I don't want to neither pause the pipline nor push broken code-->
+         <!-- <p v-if="menuItem.isVisible">{{ menuItem.component.__name }}</p> -->
+        <component :is="menuItem.component" v-if="menuItem.isVisible" markRaw   >
+        </component>
     </div>
 
 </template>
 
 <script setup lang="ts">
 
-import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
+import { useNetFlux, type HttpMethod, defaultConfig } from '~/composable/useNetFlux';
 import { usePlaygroundStore } from '~/stores/playground.store';
-const { executeCall, updateGlobalConfig } = useNetStack();
+const { executeCall, updateGlobalConfig } = useNetFlux();
 const playgroundStoreOpt = usePlaygroundStoreOpt();
 
 
 const httpMethods = playgroundStoreOpt.httpMethods;
 const currentActiveMethod = ref(0);
 const response = ref();
+
 
 
 const endpointInputModel = playgroundStoreOpt.endpoint;

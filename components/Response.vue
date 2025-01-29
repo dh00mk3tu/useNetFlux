@@ -33,7 +33,7 @@ const copyToClipboard = async () => {
     } catch (error) {
         /**
          * Probably need a better way to notify the user that something has failed. Can't expect them to check console lol
-         * Maybe I'll make a consolse for netstack only. 
+         * Maybe I'll make a consolse for netflux only. 
          */
         console.error('Failed to copy text:', error);
     }

@@ -1,4 +1,4 @@
-# useNetStack
+# useNetFlux
 
 ---
 
@@ -19,20 +19,20 @@ Let's discuss what's there to offer and you'll know whether you need this or not
 
 ### [Documentation](/documentation)
 
-### [useNetStack - Playground](/playground)
+### [useNetFlux - Playground](/playground)
 
 ---
 
 ### Quick Example
 
-`useNetStack` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls, provide you with logs when you need them and solid control of each individual call as well. Let's start by making a normal API call.
+`useNetFlux` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls, provide you with logs when you need them and solid control of each individual call as well. Let's start by making a normal API call.
 
-After importing `useNetStack()`, you'll find that it exports a method called `executeCall` . This method allows us to make our API calls and provides us with all the options that are required for granular control over our call.
+After importing `useNetFlux()`, you'll find that it exports a method called `executeCall` . This method allows us to make our API calls and provides us with all the options that are required for granular control over our call.
 
 ![Importing Method](/importingmethod.png)
 
 ```ts [api_call.ts]
-const { executeCall } = useNetStack();
+const { executeCall } = useNetFlux();
 
 const result = await executeCall({
   apiRequest: {
@@ -60,4 +60,4 @@ We can select the type of our API method, and specify the API endpoint.
 
 Now all you have to do is play around with the result that you get from the endpoint.
 
-Head over to [Features](/features) to read more about the `useNetStack` or head to [Documentation](/documentation) if you're ready to get started.
+Head over to [Features](/features) to read more about the `useNetFlux` or head to [Documentation](/documentation) if you're ready to get started.

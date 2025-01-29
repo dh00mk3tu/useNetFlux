@@ -1,6 +1,6 @@
 <template>
     <div class="header-container">
-        <p class="mx-auto text-3xl text-center py-4">useNetStack - Playground</p>
+        <p class="mx-auto text-3xl text-center py-4">useNetFlux - Playground</p>
     </div>
     <Step0 />
     <div class="method-container">
@@ -41,8 +41,8 @@
 
 <script setup lang="ts">
 
-import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
-const { executeCall, updateGlobalConfig } = useNetStack();
+import { useNetFlux, type HttpMethod, defaultConfig } from '~/composable/useNetFlux';
+const { executeCall, updateGlobalConfig } = useNetFlux();
 
 
 const httpMethods = ['Get', 'Post', 'Delete', 'Put', 'Patch'];

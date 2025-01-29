@@ -40,7 +40,7 @@ const defaultConfig = {
 };
 
 // Main request manager function
-export function useNetStack() {
+export function useNetFlux() {
   const requestQueue = new Map(); // Store ongoing requests
   const cacheStore = new Map(); // Store cached responses
 

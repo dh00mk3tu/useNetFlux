@@ -4,7 +4,7 @@
         <div class="box">
             <div class="flex flex-row justify-between items-center">
                 <div class="logo p-4">
-                    <p class="text-4xl header-text-bold text-gray-800">useNetStack</p>
+                    <p class="text-4xl header-text-bold text-gray-800">useNetFlux</p>
                     <p>A powerful network composable & light-weight API playground</p>
                 </div>
                 <div class="menu p-4">
@@ -66,7 +66,7 @@
                             this to handle my APIs properly I realized
                             that there is no API controller or package that would provide me with any control over my
                             requests.
-                            Hence, <u>useNetStack</u> was born.
+                            Hence, <u>useNetFlux</u> was born.
 
                             <br><br>
                             A detailed documentation and & list of features will be published soon, I am working on it.

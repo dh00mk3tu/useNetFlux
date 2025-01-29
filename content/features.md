@@ -1,8 +1,8 @@
 # Features
 
-# useNetStack - A Powerful Composable for API Requests
+# useNetFlux - A Powerful Composable for API Requests
 
-`useNetStack` is a versatile Vue 3/Nuxt 3 composable that abstracts and enhances API requests with built-in features like retries, caching, timeouts, request cancellation, and logging. It is designed to handle common challenges in API requests while providing a flexible and configurable structure.
+`useNetFlux` is a versatile Vue 3/Nuxt 3 composable that abstracts and enhances API requests with built-in features like retries, caching, timeouts, request cancellation, and logging. It is designed to handle common challenges in API requests while providing a flexible and configurable structure.
 
 ## Key Features
 
@@ -287,10 +287,10 @@ updateGlobalConfig({
 
 ## Conclusion
 
-The `useNetStack` composable enhances the process of making API requests by providing support for retries, timeouts, caching, cancellation, and logging. It is flexible, with both per-request and global configurations available, making it a powerful tool for handling network requests in your Vue 3/Nuxt 3 applications.
+The `useNetFlux` composable enhances the process of making API requests by providing support for retries, timeouts, caching, cancellation, and logging. It is flexible, with both per-request and global configurations available, making it a powerful tool for handling network requests in your Vue 3/Nuxt 3 applications.
 
 ```text
 
-This markdown file contains a detailed description of the package and covers all features introduced in `useNetStack`.
+This markdown file contains a detailed description of the package and covers all features introduced in `useNetFlux`.
 
 ```

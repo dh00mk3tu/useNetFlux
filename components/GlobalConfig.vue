@@ -33,8 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { useNetStack, type HttpMethod, defaultConfig } from '~/composable/useNetStackNuxt';
-const { updateGlobalConfig } = useNetStack();
+import { useNetFlux, type HttpMethod, defaultConfig } from '~/composable/useNetFlux';
+const { updateGlobalConfig } = useNetFlux();
 
 updateGlobalConfig(defaultConfig.value);
 

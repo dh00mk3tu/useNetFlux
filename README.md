@@ -1,4 +1,4 @@
-# NetStack
+# NetFlux
 ---
 
 ### About & Why
@@ -17,11 +17,11 @@ you need this or not.
 
 
 ### [Blog Post](https://dh00mk3tu.github.io/blogs/posts/use-net-stack/)
-### [Documentation](https://use-netstack.nuxt.space/documentation)
+### [Documentation](https://use-netflux.nuxt.space/documentation)
 
 ### Features 
 #### Network Requests 
-`useNetStack` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls  
+`useNetFlux` can make network calls for you, in a clean and intuitive manner. It can help you structure your API calls  
 
 ### Current Objectives 
 #### Error Handling: 

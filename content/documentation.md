@@ -1,6 +1,6 @@
-# useNetStack Documentation
+# useNetFlux Documentation
 
-This `useNetStack` composable provides an abstraction for making API requests with additional features such as retries, caching, timeouts, cancellation, and logging. It also includes a global configuration that can be customized.
+This `useNetFlux` composable provides an abstraction for making API requests with additional features such as retries, caching, timeouts, cancellation, and logging. It also includes a global configuration that can be customized.
 
 ## Table of Contents
 
@@ -40,24 +40,24 @@ This `useNetStack` composable provides an abstraction for making API requests wi
 
 ## Installation
 
-To use `useNetStack`, first import the composable into your Vue 3/Nuxt 3 project.
+To use `useNetFlux`, first import the composable into your Vue 3/Nuxt 3 project.
 
 I will add support for other JS/TS applications later in the future as a `npm` package.
 
 At the moment, it is tested and works the best with NUXT 3 applications.
 
 ```ts
-import { useNetStack } from "./netStack";
+import { useNetFlux } from "./netFlux";
 ```
 
 ---
 
 ## Basic Usage
 
-The `useNetStack` composable allows you to make API calls with customizable options such as retries, timeouts, cache handling, and more.
+The `useNetFlux` composable allows you to make API calls with customizable options such as retries, timeouts, cache handling, and more.
 
 ```ts
-const { executeCall, updateGlobalConfig } = useNetStack();
+const { executeCall, updateGlobalConfig } = useNetFlux();
 
 // Example of making a GET request
 
@@ -162,7 +162,7 @@ executeCall({
 
 ## Global Configuration
 
-`useNetStack` has a global configuration that can be updated using `updateGlobalConfig`. This allows setting default behaviors for all API calls.
+`useNetFlux` has a global configuration that can be updated using `updateGlobalConfig`. This allows setting default behaviors for all API calls.
 
 ### Global Config Fields
 
@@ -204,7 +204,7 @@ updateGlobalConfig({
 
 ### Retries
 
-`useNetStack` supports automatic retries when a network request fails. The number of retries and delay between retries can be configured.
+`useNetFlux` supports automatic retries when a network request fails. The number of retries and delay between retries can be configured.
 
 - **Global default**: 3 retries with a 1-second delay.
 
@@ -228,7 +228,7 @@ Responses can be cached to prevent redundant network requests within a specific 
 
 ### Request Cancellation
 
-Abort controllers can be used to cancel ongoing requests. You can pass a custom `AbortController` or let `useNetStack` handle cancellation with timeouts.
+Abort controllers can be used to cancel ongoing requests. You can pass a custom `AbortController` or let `useNetFlux` handle cancellation with timeouts.
 
 ### Logging
 
@@ -311,7 +311,7 @@ Logging helps trace the flow of requests and catch potential issues during retri
 ### Simple GET Request
 
 ```ts
-const { executeCall } = useNetStack();
+const { executeCall } = useNetFlux();
 
 executeCall({
   apiRequest: {
@@ -365,7 +365,7 @@ setTimeout(() => controller.abort(), 2000);
 ### Updating Global Configuration
 
 ```ts
-const { updateGlobalConfig } = useNetStack();
+const { updateGlobalConfig } = useNetFlux();
 
 updateGlobalConfig({
   retries: 2, // Update global retries to 2
