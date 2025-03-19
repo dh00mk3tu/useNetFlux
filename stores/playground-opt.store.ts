@@ -45,7 +45,7 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
   /**
    * States
    */
-  const playgroundMainMenu = shallowRef<PlayGroundMenuOption[]>([...initPlaygroundMainMenu]);
+  const playgroundMainMenu = ref<PlayGroundMenuOption[]>([...initPlaygroundMainMenu]);
  
 
   const httpMethods = ref<HttpMethod[]>([
@@ -68,7 +68,7 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
    * Methods & Functions
    */
   const toggleOptionView = (menuItemIndex: number) => {
-    
+     
     playgroundMainMenu.value[menuItemIndex].isVisible =
       !playgroundMainMenu.value[menuItemIndex].isVisible;
   };

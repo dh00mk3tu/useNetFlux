@@ -23,8 +23,8 @@
     <div v-for="menuItem in playgroundStoreOpt.playgroundMainMenu">
         <!-- I honestly have no idea why components are not being rendered in option store and if I push the code, 
          the pipeline will build it and I don't want to neither pause the pipline nor push broken code-->
-         <!-- <p v-if="menuItem.isVisible">{{ menuItem.component.__name }}</p> -->
-        <component :is="menuItem.component" v-if="menuItem.isVisible" markRaw   >
+         
+         <component :is="menuItem.component" v-if="menuItem.isVisible" markRaw   >
         </component>
     </div>
 
