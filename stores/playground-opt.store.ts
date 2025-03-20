@@ -1,6 +1,7 @@
 import APIMethod from "~/components/APIMethod.vue";
 import GlobalConfig from "~/components/GlobalConfig.vue";
 import Response from "~/components/Response.vue";
+import HeaderBodyConfig from "~/components/HeaderBodyConfig.vue";
 import { useNetFlux, type HttpMethod } from "~/composable/useNetFlux";
 import APIEndpointSetup from "~/components/APIEndpointSetup.vue";
 import type { APIState } from "~/types/api-state.type";
@@ -25,6 +26,11 @@ const initPlaygroundMainMenu: PlayGroundMenuOption[] = [
     component: markRaw(APIMethod),
   },
   {
+    title: "Configure Headers & Body",
+    isVisible: true,
+    component: markRaw(HeaderBodyConfig),
+  },
+  {
     title: "Configure Endpoint",
     isVisible: true,
     component: markRaw(APIEndpointSetup),
@@ -46,7 +52,11 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
    * States
    */
   const playgroundMainMenu = ref<PlayGroundMenuOption[]>([...initPlaygroundMainMenu]);
- 
+
+  const headers = ref<Record<string, string>>({
+    "Content-Type": "application/json"
+  });
+  const body = ref<string>("");
 
   const httpMethods = ref<HttpMethod[]>([
     "GET",
@@ -104,6 +114,7 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
     toggleOptionView,
     handleMethodTabClick,
     handleTestButton,
-    
+    headers,
+    body,
   };
 });

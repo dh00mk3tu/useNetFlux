@@ -6,7 +6,7 @@
         <div class="method-menu">
             <input type="text" v-model="playgroundStoreOpt.endpoint">
                 <button @click="playgroundStoreOpt.handleTestButton()" class="m-2">
-                    Test Opt Store
+                    Test Store
                 </button>
             </input>
         </div>
