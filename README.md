@@ -25,9 +25,9 @@ you need this or not.
 
 ### Current Objectives 
 #### Error Handling: 
-    - [x] Add retry mechanisms
-    - [ ] Custom error handling 
-    - [x] Cancellation tokens 
+    -[x] Add retry mechanisms
+    -[ ] Custom error handling 
+    -[x] Cancellation tokens 
 #### Timeouts and Caching: 
     - [x] Support request timeouts  
     - [x] Add response caching
