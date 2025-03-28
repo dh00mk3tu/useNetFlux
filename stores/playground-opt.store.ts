@@ -54,7 +54,8 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
   const playgroundMainMenu = ref<PlayGroundMenuOption[]>([...initPlaygroundMainMenu]);
 
   const headers = ref<Record<string, string>>({
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Content-Types": "application/json",
   });
   const body = ref<string>("");
 
@@ -73,6 +74,8 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
     message: "Response State",
     data: {},
   });
+
+  const newHeaderCreationActive = ref(false);
 
   /**
    * Methods & Functions
@@ -105,6 +108,23 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
     }
   };
 
+  const toggleNewHeaderCreation = () => {
+    newHeaderCreationActive.value = !newHeaderCreationActive.value;
+  }
+
+  const addNewHeader = (key: string, value: string) => {
+    if (key && value) {
+      headers.value[key] = value;
+    }
+  }
+  
+  const removeHeader = (key: string) => {
+    if (headers.value[key]) {
+      delete headers.value[key];
+    }
+  }
+  const saveHeader = () => {}
+
   return {
     playgroundMainMenu,
     httpMethods,
@@ -116,5 +136,10 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
     handleTestButton,
     headers,
     body,
+    addNewHeader,
+    removeHeader,
+    saveHeader,
+    newHeaderCreationActive,
+    toggleNewHeaderCreation
   };
 });
