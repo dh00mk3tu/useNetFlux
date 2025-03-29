@@ -55,7 +55,6 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
 
   const headers = ref<Record<string, string>>({
     "Content-Type": "application/json",
-    "Content-Types": "application/json",
   });
   const body = ref<string>("");
 
@@ -95,7 +94,10 @@ export const usePlaygroundStoreOpt = defineStore("playground", () => {
   const handleTestButton = async () => {
     response.value = await executeCall({
       apiRequest: {
+        headers: headers.value,
         endpoint: endpoint.value,
+        // send body only if method is not GET
+        body: currentHttpsMethod.value !== "GET" ? body.value : undefined,
         method: currentHttpsMethod.value as HttpMethod,
       },
       skipCache: false,

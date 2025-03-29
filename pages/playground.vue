@@ -139,7 +139,5 @@ button:hover {
     scale: 1.04;
 }
 
-pre {
-    white-space: pre-line;
-}
+
 </style>
